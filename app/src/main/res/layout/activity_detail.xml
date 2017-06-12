@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="letsdecode.com.popularmovies.DetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/title_parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="12dp"
+            android:background="#008080"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="35sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_parent_layout"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/selected_poster_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_release_date"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/selected_poster_image" />
+
+        <TextView
+            android:id="@+id/tv_vote"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_release_date"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/selected_poster_image" />
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selected_poster_image"
+            android:layout_marginTop="20dp" />
+
+    </RelativeLayout>
+</RelativeLayout>
+
+
