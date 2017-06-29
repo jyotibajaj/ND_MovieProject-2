@@ -1,9 +1,9 @@
-package data;
+package letsdecode.com.popularmovies.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import data.MovieContract.FavoriteMoviesEntry;
+import letsdecode.com.popularmovies.data.MovieContract.FavoriteMoviesEntry;
 
 /**
  * Created by aashi on 28/06/17.

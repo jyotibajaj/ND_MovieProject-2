@@ -1,4 +1,4 @@
-package data;
+package letsdecode.com.popularmovies.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,7 +11,7 @@ public class MovieData implements Parcelable {
     private String imageUrl;
     private String title;
     private String release_date;
-    private double vote_average;
+    private float vote_average;
     private String overview;
     private int id;
 
@@ -28,15 +28,19 @@ public class MovieData implements Parcelable {
         return release_date;
     }
 
-    public double getVote_average() {
+    public float getVote_average() {
         return vote_average;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getOverview() {
         return overview;
     }
 
-    public MovieData(String moviePosterUrl, String date, String title, double vote_average, String overview, int id) {
+    public MovieData(String moviePosterUrl, String date, String title, float vote_average, String overview, int id) {
         this.imageUrl = moviePosterUrl;
         this.release_date = date;
         this.title = title;
@@ -65,7 +69,7 @@ public class MovieData implements Parcelable {
         dest.writeString(this.imageUrl);
         dest.writeString(this.title);
         dest.writeString(this.release_date);
-        dest.writeDouble(this.vote_average);
+        dest.writeFloat(this.vote_average);
         dest.writeString(this.overview);
         dest.writeInt(this.id);
     }
@@ -74,7 +78,7 @@ public class MovieData implements Parcelable {
         this.imageUrl = in.readString();
         this.title = in.readString();
         this.release_date = in.readString();
-        this.vote_average = in.readDouble();
+        this.vote_average = in.readFloat();
         this.overview = in.readString();
         this.id = in.readInt();
     }

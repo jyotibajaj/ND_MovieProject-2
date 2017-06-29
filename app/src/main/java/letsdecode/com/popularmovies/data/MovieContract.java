@@ -1,4 +1,4 @@
-package data;
+package letsdecode.com.popularmovies.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
 
 
 public class MovieContract {
-    public static final String CONTENT_AUTHORITY = "com.example.android.moviesapp";
+    public static final String CONTENT_AUTHORITY = "letsdecode.com.popularmovies";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 

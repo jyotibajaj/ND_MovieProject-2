@@ -1,4 +1,4 @@
-package adapter;
+package letsdecode.com.popularmovies.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +12,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.MovieData;
+import letsdecode.com.popularmovies.data.MovieData;
 import letsdecode.com.popularmovies.R;
 
 /**
  * Created by jyoti on 13/05/17.
- * adapter
+ * letsdecode.com.popularmovies.adapter
  */
 
 public class MovieAdapter extends
@@ -74,19 +74,19 @@ public class MovieAdapter extends
 
 
     /**
-     * OnBindViewHolder is called by the RecyclerView to display the data at the specified
+     * OnBindViewHolder is called by the RecyclerView to display the letsdecode.com.popularmovies.data at the specified
      * position. In this method, we update the contents of the ViewHolder to display the correct
      * indices in the list for this particular position, using the "position" argument that is conveniently
      * passed into us.
      *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
-     *                 item at the given position in the data set.
-     * @param position The position of the item within the adapter's data set.
+     *                 item at the given position in the letsdecode.com.popularmovies.data set.
+     * @param position The position of the item within the letsdecode.com.popularmovies.adapter's letsdecode.com.popularmovies.data set.
      */
     @Override
     public void onBindViewHolder(MovieAdapter.MovieViewHolder holder, int position) {
-        // Involves populating data into the item through holder
-        // Get the data model based on position
+        // Involves populating letsdecode.com.popularmovies.data into the item through holder
+        // Get the letsdecode.com.popularmovies.data model based on position
         MovieData movieData = mMovieData.get(position);
         Picasso.with(mContext).load(movieData.getMoviePosterUrl()).into(holder.posterImageView);
 
@@ -117,7 +117,7 @@ public class MovieAdapter extends
 
 
     /**
-     * This method sets movie data into arraylist.
+     * This method sets movie letsdecode.com.popularmovies.data into arraylist.
      *
      * @param movieData
      */
@@ -127,7 +127,7 @@ public class MovieAdapter extends
         notifyDataSetChanged();
     }
 
-    // Provide a direct reference to each of the views within a data item
+    // Provide a direct reference to each of the views within a letsdecode.com.popularmovies.data item
     // Used to cache the views within the item layout for fast access
     public class MovieViewHolder
             extends RecyclerView.ViewHolder implements View.OnClickListener {
