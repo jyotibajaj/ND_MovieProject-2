@@ -84,7 +84,9 @@ public class DetailActivity extends BaseActivity {
         titleTextView.setText(movieData.getTitle());
         String voteAverage = movieData.getVote_average() + "";
         voteTextView.setText(voteAverage);
-        ratingBar.setRating((float) movieData.getVote_average());
+        if(movieData.getVote_average() > 0) {
+            ratingBar.setRating(movieData.getVote_average());
+        }
         id = movieData.getId() + "";
         overviewTextView.setText(movieData.getOverview());
         Picasso.with(getApplicationContext()).load(movieData.getMoviePosterUrlw300()).into(tv_PosterImageView);
@@ -134,8 +136,7 @@ public class DetailActivity extends BaseActivity {
 
     public void clickToPlay(View v) {
         trailerData = (TrailerData) playIconButton.getTag();
-        //TODO: Make sure to add this to the Strings XML later on
-        String chooserTitle = "";
+        String chooserTitle = "R.String.chooserTitle";
         Intent trailerIntent = new Intent(Intent.ACTION_VIEW);
         trailerIntent.setData(Uri.parse(trailerData.getTrailerUrl()));
         trailerIntent = Intent.createChooser(trailerIntent, chooserTitle);

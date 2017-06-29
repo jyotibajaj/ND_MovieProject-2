@@ -5,64 +5,125 @@
     android:layout_height="match_parent"
     tools:context="letsdecode.com.popularmovies.DetailActivity">
 
-    <RelativeLayout
-        android:id="@+id/title_parent_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_title"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="12dp"
-            android:background="#008080"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="35sp" />
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:background="#008080"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#ffffff"
+                android:textSize="35sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title_parent_layout"
-        android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/selected_poster_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/selected_poster_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginLeft="20dp" />
 
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/selected_poster_image" />
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/selected_poster_image"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_vote"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_release_date"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/selected_poster_image" />
+            <RatingBar
+                android:id="@+id/pop_ratingbar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_release_date"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/selected_poster_image"
+                android:isIndicator="true"
+                android:numStars="10"
+                android:stepSize="1" />
 
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_vote"
-            android:layout_toRightOf="@+id/selected_poster_image"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            />
+            <TextView
+                android:id="@+id/tv_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_release_date"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/pop_ratingbar"
+                android:textStyle="bold" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_check_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pop_ratingbar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/selected_poster_image"
+                android:onClick="checkReviewsClick"
+                android:text="@string/check_reviews"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <CheckBox
+                android:id="@+id/favorite_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/tv_check_reviews"
+                android:layout_gravity="center"
+                android:layout_marginLeft="45dp"
+                android:layout_toRightOf="@+id/selected_poster_image"
+                android:button="@drawable/favorite_button"
+                android:onClick="addOrRemoveFromFavorites" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_below="@+id/selected_poster_image"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+
+                />
+
+
+            <ImageButton
+                android:id="@+id/image_play_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_overview"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="20dp"
+                android:onClick="clickToPlay"
+                android:src="@drawable/play_icon" />
+
+            <TextView
+                android:id="@+id/tv_play_trailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_overview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/image_play_btn"
+                android:text="@string/play_trailer"
+                android:textSize="18dp" />
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
+
+
 
 

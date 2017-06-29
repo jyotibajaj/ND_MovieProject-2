@@ -67,7 +67,7 @@ public class NetworkUtils {
     /**
      * This method build the url for fetching movie letsdecode.com.popularmovies.data sorted for popularity
      */
-    public static URL buildPopularMovies() {
+    public static URL buildPopularMoviesUrl() {
         Uri.Builder builder = createUrlBuilder(END_POINT_POPULAR);
         return buildUrl(builder);
 
@@ -76,7 +76,7 @@ public class NetworkUtils {
     /**
      * This method build the url for fetching movie letsdecode.com.popularmovies.data as per rating
      */
-    public static URL buildTopRated() {
+    public static URL buildTopRatedUrl() {
         Uri.Builder builder = createUrlBuilder(END_POINT_TOP_RATED);
         return buildUrl(builder);
 

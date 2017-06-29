@@ -17,10 +17,12 @@ import letsdecode.com.popularmovies.adapter.MovieAdapter;
 import letsdecode.com.popularmovies.data.MovieData;
 import utilities.MoviesQueryTask;
 
-import static utilities.NetworkUtils.buildPopularMovies;
-import static utilities.NetworkUtils.buildTopRated;
+import static utilities.NetworkUtils.buildPopularMoviesUrl;
+import static utilities.NetworkUtils.buildTopRatedUrl;
 
 public class MoviesGridActivity extends BaseActivity implements MovieAdapter.CustomItemClickInterface {
+
+    private static final String STORED_QUERY_URL = "query";
     private String TAG = this.getClass().getSimpleName();
     private int GRID_COLUMNS = 2;
 
@@ -29,6 +31,7 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
 
     // Reference to Adapter
     public static MovieAdapter mMovieAdapter;
+    URL mRequiredURL;
 
 
     @Override
@@ -46,14 +49,32 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         // Attach the letsdecode.com.popularmovies.adapter to the recyclerview to populate items
         rvMovies.setAdapter(mMovieAdapter);
         //  manually check the internet status and change the text status
-        load(getNetworkInfo());
+
+        if (savedInstanceState != null) {
+            String queryUrl = savedInstanceState.getString(STORED_QUERY_URL);
+            if (queryUrl.equals(buildPopularMoviesUrl().toString())) {
+                mRequiredURL = buildPopularMoviesUrl();
+                setTitle(R.string.popular);
+            } else {
+                mRequiredURL = buildTopRatedUrl();
+                setTitle(R.string.top_rated);
+            }
+
+
+        }
+        //savedinstanceState is null
+        else {
+            mRequiredURL = buildPopularMoviesUrl();
+        }
+        load(getNetworkInfo(), mRequiredURL);
+
     }
 
 
     @Override
     protected void onNetworkChanged() {
 //        Log.d(TAG, "onNetworkChanged Called ");
-        load(getNetworkInfo());
+        load(getNetworkInfo(), mRequiredURL);
 //        Log.d(TAG, "load gets Called ");
 
     }
@@ -63,17 +84,14 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
      * text of activity by calling method
      */
 
-    private void load(NetworkInfo networkInfo) {
+    private void load(NetworkInfo networkInfo, URL url) {
         if (networkInfo == null) {
             Toast.makeText(this, "No Network", Toast.LENGTH_LONG).show();
             return;
         }
         int val = getIntent().getIntExtra("CURRENTVIEW", R.id.popular);
-        URL url = null;
-        if (val == R.id.popular) {
-            url = buildPopularMovies();
-        } else if (val == R.id.top_rated) {
-            url = buildTopRated();
+        if (val == R.id.top_rated) {
+            url = buildTopRatedUrl();
         }
         if (url != null) {
             new MoviesQueryTask().execute(url);
@@ -94,12 +112,11 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
             getIntent().putExtra("CURRENTVIEW", R.id.popular);
         } else if (itemThatWasClicked == R.id.top_rated) {
             getIntent().putExtra("CURRENTVIEW", R.id.top_rated);
-        }
-        else if(itemThatWasClicked ==  R.id.favorites) {
+        } else if (itemThatWasClicked == R.id.favorites) {
             Intent intent = new Intent(MoviesGridActivity.this, FavoriteMoviesActivity.class);
             startActivity(intent);
         }
-        load(getNetworkInfo());
+        load(getNetworkInfo(), mRequiredURL);
 
         return super.onOptionsItemSelected(item);
 
@@ -119,6 +136,13 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         MovieData item = movieDatas.get(itemClicked);
         //creating intent and adding letsdecode.com.popularmovies.data to transfer.
         startActivity(DetailActivity.createIntent(this, item));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String storedUrl = mRequiredURL.toString();
+        outState.putString(STORED_QUERY_URL, storedUrl);
     }
 
 
