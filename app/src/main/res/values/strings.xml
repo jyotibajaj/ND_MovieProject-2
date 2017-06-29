@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">PopularMovies</string>
+    <string name="app_name">Popular Movies</string>
+    <string name="review_activity">Reviews Activity</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="play_trailer">Play Trailer</string>
+    <string name="check_reviews">Reviews</string>
+    <string name="error">Failed to get a result</string>
+    <string name="favorites_title">Favorite Movies</string>
+    <string name="favorites">favorite collection</string>
     <string name="detail_activity">DetailActivity</string>
+    <string name="choose_app">Choose app to view trailer:</string>
 </resources>

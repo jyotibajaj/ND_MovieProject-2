@@ -38,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Subscribe to call back as user might can the content
+        //Subscribe to call back
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         mReceiver = new BroadcastReceiver() {
             @Override

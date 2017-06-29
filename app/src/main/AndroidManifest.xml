@@ -15,6 +15,7 @@
         <activity android:name=".MoviesGridActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,7 +24,17 @@
             android:configChanges="orientation|screenLayout"
             android:label="@string/detail_activity"
             android:parentActivityName=".MoviesGridActivity" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity
+            android:name=".ReviewsActivity"
+            android:label="@string/review_activity" />
+
+        <provider
+            android:name=".data.MovieContentProvider"
+            android:authorities="letsdecode.com.popularmovies"
+            android:exported="false" />
+
+        <activity android:name=".FavoriteMoviesActivity"></activity>
     </application>
 
 </manifest>
