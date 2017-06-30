@@ -16,11 +16,9 @@ import utilities.DividerItemDecoration;
 
 public class ReviewsActivity extends AppCompatActivity {
     public static final String REVIEW_DATA_KEY = "reviewDataKey";
-    //arraylist storing the reviews of the movie.
-    ArrayList<ReviewData> reviewDatas = new ArrayList<>();
+
     // Reference to Adapter
     public static ReviewsAdapter mReviewsAdapter;
-    private static final int VERTICAL_ITEM_SPACE = 48;
 
 
 
@@ -31,7 +29,7 @@ public class ReviewsActivity extends AppCompatActivity {
      * @param reviewDataArrayList list of review letsdecode.com.popularmovies.data object type.
      * @return intent.
      */
-    public static Intent createIntentFromReviews(Activity activity, final ArrayList<ReviewData> reviewDataArrayList) {
+    public static Intent createIntentFromDetailActivity(Activity activity, final ArrayList<ReviewData> reviewDataArrayList) {
         Intent intent = new Intent(activity, ReviewsActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(ReviewsActivity.REVIEW_DATA_KEY,(Serializable)reviewDataArrayList);
@@ -64,7 +62,7 @@ public class ReviewsActivity extends AppCompatActivity {
         rvReviews.setAdapter(mReviewsAdapter);
     }
 
-    ArrayList<ReviewData> getReviewsDataArrayList() {
+    private ArrayList<ReviewData> getReviewsDataArrayList() {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
         ArrayList<ReviewData> reviewDataArrayList = (ArrayList<ReviewData>) args.getSerializable(ReviewsActivity.REVIEW_DATA_KEY);

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import letsdecode.com.popularmovies.data.TrailerData;
-import letsdecode.com.popularmovies.DetailActivity;
 
 /**
  * Created by aashi on 14/06/17.
@@ -16,8 +15,11 @@ import letsdecode.com.popularmovies.DetailActivity;
 
 public class FetchTrailerTask extends AsyncTask<URL, Void, TrailerData> {
     int movieId;
+    private OnFetchComplete onTrailerFetchComplete;
 
-    public FetchTrailerTask(int id) {
+
+    public FetchTrailerTask(OnFetchComplete onTrailerFetchComplete, int id) {
+        this.onTrailerFetchComplete = onTrailerFetchComplete;
         movieId = id;
     }
 
@@ -37,7 +39,7 @@ public class FetchTrailerTask extends AsyncTask<URL, Void, TrailerData> {
 
     @Override
     protected void onPostExecute(TrailerData trailerData) {
-        DetailActivity.playIconButton.setTag(trailerData);
+        onTrailerFetchComplete.onSuccessFetchTrailer(trailerData);
 
 
     }

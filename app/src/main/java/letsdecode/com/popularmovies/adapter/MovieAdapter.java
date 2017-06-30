@@ -12,8 +12,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import letsdecode.com.popularmovies.data.MovieData;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import letsdecode.com.popularmovies.R;
+import letsdecode.com.popularmovies.data.MovieData;
 
 /**
  * Created by jyoti on 13/05/17.
@@ -36,7 +38,7 @@ public class MovieAdapter extends
      * Constructor for MovieAdapter that accepts a number of items to display and the specification
      * for the ListItemClickListener.
      *
-     * @param list  Number of items to display in list
+     * @param list    Number of items to display in list
      * @param context
      */
 
@@ -131,6 +133,7 @@ public class MovieAdapter extends
     // Used to cache the views within the item layout for fast access
     public class MovieViewHolder
             extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.poster_image)
         public ImageView posterImageView;
 
 
@@ -144,8 +147,8 @@ public class MovieAdapter extends
          */
         public MovieViewHolder(View itemView) {
             super(itemView);
-            posterImageView = (ImageView) itemView.findViewById(R.id.poster_image);
             itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
 

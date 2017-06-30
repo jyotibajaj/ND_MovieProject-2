@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import letsdecode.com.popularmovies.adapter.FavoriteMovieAdapter;
 import letsdecode.com.popularmovies.data.MovieContract.FavoriteMoviesEntry;
 
@@ -24,6 +27,7 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
 
     FavoriteMovieAdapter mFavoriteMovieAdapter;
     private RecyclerView mFavoriteMoviesListRecyclerView;
+    @BindView(R.id.favorite_movies_error_message_display)
     TextView mErrorMessageTextView;
 
     @Override
@@ -31,20 +35,21 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movies);
         setTitle(R.string.favorites_title);
-
         //initialization
         mFavoriteMoviesListRecyclerView = (RecyclerView) findViewById(R.id.rv_favorite_movies);
-        mErrorMessageTextView = (TextView) findViewById(R.id.favorite_movies_error_message_display);
-
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         mFavoriteMoviesListRecyclerView.setLayoutManager(layoutManager);
         mFavoriteMoviesListRecyclerView.setHasFixedSize(true);
 
         mFavoriteMovieAdapter = new FavoriteMovieAdapter(this);
-        mFavoriteMoviesListRecyclerView.setAdapter(mFavoriteMovieAdapter);
+        ButterKnife.bind(this);
+
 
         //kick off the loader
-        getLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this);
+        getLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this).forceLoad();
+        mFavoriteMoviesListRecyclerView.setAdapter(mFavoriteMovieAdapter);
+        Log.d("CREATE INSIDE", "FAVORITEMOVIEACTIVITY");
+
     }
 
     @Override
@@ -72,6 +77,7 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
         mFavoriteMovieAdapter.swapCursor(data);
     }
 
@@ -79,6 +85,23 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
     public void onLoaderReset(Loader<Cursor> loader) {
         mFavoriteMovieAdapter.swapCursor(null);
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+//            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this).forceLoad();
+
+
+    }
+
 
 
 }

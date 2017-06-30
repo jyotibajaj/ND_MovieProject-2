@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import letsdecode.com.popularmovies.DetailActivity;
 import letsdecode.com.popularmovies.R;
 import letsdecode.com.popularmovies.data.MovieContract;
@@ -116,12 +118,13 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
     // Inner class for creating ViewHolders
     public class FavoriteMoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.iv_item_favorite_movie)
         ImageView favoriteMovieImageView;
 
         public FavoriteMoviesViewHolder(View itemView) {
             super(itemView);
-            favoriteMovieImageView = (ImageView) itemView.findViewById(R.id.iv_item_favorite_movie);
             itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override

@@ -17,28 +17,55 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import letsdecode.com.popularmovies.data.MovieContract;
 import letsdecode.com.popularmovies.data.MovieData;
 import letsdecode.com.popularmovies.data.ReviewData;
 import letsdecode.com.popularmovies.data.TrailerData;
 import utilities.FetchReviewTask;
 import utilities.FetchTrailerTask;
+import utilities.OnFetchComplete;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity implements OnFetchComplete {
 
 
     public static final String MOVIE_DATA_KEY = "movieDataKey";
     String id;
-    public static ImageButton playIconButton;
-    public static TextView reviewTextViewClickable;
-    TrailerData trailerData;
-    CheckBox favoriteButton;
     String cursorMovieId;
-
-    ReviewData reviewData;
     //receive letsdecode.com.popularmovies.data from intent
     MovieData movieData;
 
+
+    TrailerData trailerData;
+
+    @BindView(R.id.favorite_button)
+    CheckBox favoriteButton;
+
+    @BindView(R.id.selected_poster_image)
+    ImageView tv_PosterImageView;
+
+    @BindView(R.id.tv_release_date)
+    TextView dateTextView;
+
+
+    @BindView(R.id.tv_title)
+    TextView titleTextView;
+
+    @BindView(R.id.tv_vote)
+    TextView voteTextView;
+
+    @BindView(R.id.tv_overview)
+    TextView overviewTextView;
+
+    @BindView(R.id.image_play_btn)
+    public ImageButton playIconButton;
+
+    @BindView(R.id.tv_check_reviews)
+    public TextView reviewTextViewClickable;
+
+    @BindView(R.id.pop_ratingbar)
+    RatingBar ratingBar;
 
     /**
      * This method creates the intent to start the Detail activity.
@@ -62,15 +89,7 @@ public class DetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
 
         //initializing the views
-        ImageView tv_PosterImageView = (ImageView) findViewById(R.id.selected_poster_image);
-        TextView dateTextView = (TextView) findViewById(R.id.tv_release_date);
-        TextView titleTextView = (TextView) findViewById(R.id.tv_title);
-        TextView voteTextView = (TextView) findViewById(R.id.tv_vote);
-        TextView overviewTextView = (TextView) findViewById(R.id.tv_overview);
-        playIconButton = (ImageButton) findViewById(R.id.image_play_btn);
-        reviewTextViewClickable = (TextView) findViewById(R.id.tv_check_reviews);
-        favoriteButton = (CheckBox) findViewById(R.id.favorite_button);
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.pop_ratingbar);
+        ButterKnife.bind(this);
 
 
         Intent detailIntent = getIntent();
@@ -90,11 +109,12 @@ public class DetailActivity extends BaseActivity {
         id = movieData.getId() + "";
         overviewTextView.setText(movieData.getOverview());
         Picasso.with(getApplicationContext()).load(movieData.getMoviePosterUrlw300()).into(tv_PosterImageView);
+
         //fetching you tube url source.
-        new FetchTrailerTask(movieData.getId()).execute();
+        new FetchTrailerTask(this,movieData.getId()).execute();
 
         //fetching reviews on click of review textView
-        new FetchReviewTask(movieData.getId()).execute();
+        new FetchReviewTask(this, movieData.getId()).execute();
 
 
         //enabling back button
@@ -145,7 +165,7 @@ public class DetailActivity extends BaseActivity {
 
     public void checkReviewsClick(View v) {
         ArrayList<ReviewData> reviewDataArrayList = (ArrayList<ReviewData>) reviewTextViewClickable.getTag();
-        startActivity(ReviewsActivity.createIntentFromReviews(this, reviewDataArrayList));
+        startActivity(ReviewsActivity.createIntentFromDetailActivity(this, reviewDataArrayList));
     }
 
 
@@ -183,6 +203,23 @@ public class DetailActivity extends BaseActivity {
     }
 
 
+
+
+    @Override
+    public void onSuccessFetchReviews(ArrayList arrayList) {
+        reviewTextViewClickable.setTag(arrayList);
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onSuccessFetchTrailer(TrailerData trailerData) {
+        playIconButton.setTag(trailerData);
+    }
 }
 
 

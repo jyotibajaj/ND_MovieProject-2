@@ -9,24 +9,30 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import letsdecode.com.popularmovies.data.ReviewData;
-import letsdecode.com.popularmovies.DetailActivity;
 
 /**
  * Created by aashi on 15/06/17.
  */
 
 public class FetchReviewTask extends AsyncTask<URL, Void, ArrayList<ReviewData>> {
-    int movieId;
-    ReviewData reviewData = null;
+    private int movieId;
+    private OnFetchComplete onFetchComplete;
 
-    public FetchReviewTask(int id) {
+//    public interface OnFetchComplete {
+//        void onSuccessFetchReviews(ArrayList<ReviewData> arrayList);
+//        void onError(Throwable e);
+//
+//    }
+
+    public FetchReviewTask(OnFetchComplete onFetchComplete, int id) {
+        this.onFetchComplete = onFetchComplete;
         movieId = id;
     }
+
     @Override
     protected ArrayList<ReviewData> doInBackground(URL... params) {
         ArrayList<ReviewData> reviewDataArrayList = null;
         URL searchUrl = NetworkUtils.createReviewsUrl(movieId);
-        ReviewData reviewData = null;
         try {
             reviewDataArrayList = NetworkUtils.getReviewResponseFromHttpUrl(searchUrl);
         } catch (IOException e) {
@@ -39,9 +45,6 @@ public class FetchReviewTask extends AsyncTask<URL, Void, ArrayList<ReviewData>>
 
     @Override
     protected void onPostExecute(ArrayList<ReviewData> reviewDataArrayList) {
-        DetailActivity.reviewTextViewClickable.setTag(reviewDataArrayList);
-
-
-
+        onFetchComplete.onSuccessFetchReviews(reviewDataArrayList);
     }
 }

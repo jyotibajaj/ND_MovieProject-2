@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import letsdecode.com.popularmovies.R;
 import letsdecode.com.popularmovies.data.ReviewData;
 
@@ -99,7 +101,16 @@ public class ReviewsAdapter extends
     // Used to cache the views within the item layout for fast access
     public class ReviewDataViewHolder
             extends RecyclerView.ViewHolder {
-        public TextView authorNameTextView, contentTextView, numberTextView;
+        @BindView(R.id.tv_authorName)
+        public TextView authorNameTextView;
+
+        @BindView(R.id.tv_content)
+        public TextView contentTextView;
+
+        @BindView(R.id.tv_sequence)
+        public TextView numberTextView;
+
+
 
 
         /**
@@ -112,10 +123,7 @@ public class ReviewsAdapter extends
          */
         public ReviewDataViewHolder(View itemView) {
             super(itemView);
-            authorNameTextView = (TextView) itemView.findViewById(R.id.tv_authorName);
-            contentTextView = (TextView) itemView.findViewById(R.id.tv_content);
-            numberTextView = (TextView) itemView.findViewById(R.id.tv_sequence);
-
+            ButterKnife.bind(this, itemView);
         }
 
 
