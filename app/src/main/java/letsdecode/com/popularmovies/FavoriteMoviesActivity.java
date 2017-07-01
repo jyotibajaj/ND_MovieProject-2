@@ -90,17 +90,11 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-//            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
+            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this).forceLoad();
 
-
-    }
 
 
 
