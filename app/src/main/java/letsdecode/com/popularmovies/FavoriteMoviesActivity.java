@@ -86,14 +86,13 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
         mFavoriteMovieAdapter.swapCursor(null);
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
-        }
-    }
-
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus) {
+//            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
+//        }
+//    }
 
 
 

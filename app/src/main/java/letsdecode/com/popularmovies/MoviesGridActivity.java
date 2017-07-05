@@ -22,7 +22,7 @@ import static utilities.NetworkUtils.buildTopRatedUrl;
 
 public class MoviesGridActivity extends BaseActivity implements MovieAdapter.CustomItemClickInterface {
 
-    private static final String STORED_QUERY_URL = "query";
+    private static final String MOVIES_KEY = "movies";
     private String TAG = this.getClass().getSimpleName();
     private int GRID_COLUMNS = 2;
 
@@ -39,6 +39,14 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_grid);
         // Lookup the recyclerview in activity layout
+        if (savedInstanceState != null) {
+            movieDatas = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+        }
+        else {
+            mRequiredURL = buildPopularMoviesUrl();
+            load(getNetworkInfo(), mRequiredURL);
+        }
+
         RecyclerView rvMovies = (RecyclerView) findViewById(R.id.rv_movie_posters);
         // Set layout manager to position the items
         rvMovies.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
@@ -50,23 +58,8 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         rvMovies.setAdapter(mMovieAdapter);
         //  manually check the internet status and change the text status
 
-        if (savedInstanceState != null) {
-            String queryUrl = savedInstanceState.getString(STORED_QUERY_URL);
-            if (queryUrl.equals(buildPopularMoviesUrl().toString())) {
-                mRequiredURL = buildPopularMoviesUrl();
-                setTitle(R.string.popular);
-            } else {
-                mRequiredURL = buildTopRatedUrl();
-                setTitle(R.string.top_rated);
-            }
 
-
-        }
         //savedinstanceState is null
-        else {
-            mRequiredURL = buildPopularMoviesUrl();
-        }
-        load(getNetworkInfo(), mRequiredURL);
 
     }
 
@@ -141,11 +134,19 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        String storedUrl = mRequiredURL.toString();
-        outState.putString(STORED_QUERY_URL, storedUrl);
+        outState.putParcelableArrayList(MOVIES_KEY, movieDatas);
     }
 
-
+    @Override
+    protected void onResume() {
+//        int val = getIntent().getIntExtra("CURRENTVIEW", R.id.popular);
+//        if (val == R.id.top_rated) {
+//            mRequiredURL = buildTopRatedUrl();
+//            new MoviesQueryTask().execute(mRequiredURL);
+//        }
+//
+        super.onResume();
+    }
 }
 
 
