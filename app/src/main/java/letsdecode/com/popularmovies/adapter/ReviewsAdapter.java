@@ -92,8 +92,7 @@ public class ReviewsAdapter extends
 
     @Override
     public int getItemCount() {
-        if (null == reviewDataList) return 0;
-        return reviewDataList.size();
+        return null == reviewDataList ? 0 : reviewDataList.size();
     }
 
 
@@ -109,8 +108,6 @@ public class ReviewsAdapter extends
 
         @BindView(R.id.tv_sequence)
         public TextView numberTextView;
-
-
 
 
         /**

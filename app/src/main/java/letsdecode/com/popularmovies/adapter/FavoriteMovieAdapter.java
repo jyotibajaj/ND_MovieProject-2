@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,6 @@ import letsdecode.com.popularmovies.DetailActivity;
 import letsdecode.com.popularmovies.R;
 import letsdecode.com.popularmovies.data.MovieContract;
 import letsdecode.com.popularmovies.data.MovieData;
-
-
 
 
 public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMoviesViewHolder> {
@@ -93,11 +90,8 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public int getItemCount() {
-        if (mCursor == null) {
-            return 0;
-        }
-        Log.d("COUNT FAVORITEMOVIE",mCursor.getCount() + "");
-        return mCursor.getCount();
+        return null == mCursor ? 0 : mCursor.getCount();
+
     }
 
     public Cursor swapCursor(Cursor c) {
@@ -142,7 +136,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
             Float movieVotes = mCursor.getFloat(voteIndex);
             int movieId = mCursor.getInt(idIndex);
             //String moviePosterUrl, String date, String title, float vote_average, String overview, int id
-            MovieData movieDataInFavorites = new MovieData(mCursor.getString(posterIndex),mCursor.getString(dateIndex),mCursor.getString(titleIndex),movieVotes,mCursor.getString(overviewIndex),Integer.valueOf(movieId));
+            MovieData movieDataInFavorites = new MovieData(mCursor.getString(posterIndex), mCursor.getString(dateIndex), mCursor.getString(titleIndex), movieVotes, mCursor.getString(overviewIndex), Integer.valueOf(movieId));
 
             mClickHandler.onClick(movieDataInFavorites);
         }

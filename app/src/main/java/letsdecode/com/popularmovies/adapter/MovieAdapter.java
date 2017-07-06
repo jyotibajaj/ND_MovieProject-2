@@ -104,8 +104,8 @@ public class MovieAdapter extends
 
     @Override
     public int getItemCount() {
-        if (null == mMovieData) return 0;
-        return mMovieData.size();
+        return null == mMovieData ? 0 : mMovieData.size();
+
     }
 
     /**
