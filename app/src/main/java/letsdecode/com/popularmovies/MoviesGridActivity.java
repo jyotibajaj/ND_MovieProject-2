@@ -3,6 +3,7 @@ package letsdecode.com.popularmovies;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -25,6 +26,10 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
     private static final String MOVIES_KEY = "movies";
     private String TAG = this.getClass().getSimpleName();
     private int GRID_COLUMNS = 2;
+    public final static String LIST_STATE_KEY = "recycler_list_state";
+    Parcelable listState;
+    GridLayoutManager mGridLayoutManager;
+
 
     //arraylist storing the letsdecode.com.popularmovies.data of the app.
     ArrayList<MovieData> movieDatas = new ArrayList<>();
@@ -41,15 +46,15 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         // Lookup the recyclerview in activity layout
         if (savedInstanceState != null) {
             movieDatas = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
-        }
-        else {
+        } else {
             mRequiredURL = buildPopularMoviesUrl();
             load(getNetworkInfo(), mRequiredURL);
         }
 
         RecyclerView rvMovies = (RecyclerView) findViewById(R.id.rv_movie_posters);
         // Set layout manager to position the items
-        rvMovies.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
+        mGridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS);
+        rvMovies.setLayoutManager(mGridLayoutManager);
         //instantiating the letsdecode.com.popularmovies.adapter
         mMovieAdapter = new MovieAdapter(this, movieDatas);
         // bind the listener
@@ -57,9 +62,8 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
         // Attach the letsdecode.com.popularmovies.adapter to the recyclerview to populate items
         rvMovies.setAdapter(mMovieAdapter);
         //  manually check the internet status and change the text status
+//        int index = rvMovies.
 
-
-        //savedinstanceState is null
 
     }
 
@@ -135,20 +139,28 @@ public class MoviesGridActivity extends BaseActivity implements MovieAdapter.Cus
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(MOVIES_KEY, movieDatas);
+        // Save list state
+        listState = mGridLayoutManager.onSaveInstanceState();
+        outState.putParcelable(LIST_STATE_KEY, listState);
     }
+
 
     @Override
     protected void onResume() {
-//        int val = getIntent().getIntExtra("CURRENTVIEW", R.id.popular);
-//        if (val == R.id.top_rated) {
-//            mRequiredURL = buildTopRatedUrl();
-//            new MoviesQueryTask().execute(mRequiredURL);
-//        }
-//
+
+        if (listState != null) {
+            mGridLayoutManager.onRestoreInstanceState(listState);
+        }
         super.onResume();
     }
+
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        // Retrieve list state and list/item positions
+        if (state != null)
+            listState = state.getParcelable(LIST_STATE_KEY);
+    }
 }
-
-
 
 

@@ -5,6 +5,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,9 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
     private RecyclerView mFavoriteMoviesListRecyclerView;
     @BindView(R.id.favorite_movies_error_message_display)
     TextView mErrorMessageTextView;
+    private final static String LIST_STATE_KEY = "recycler_list_state";
+    private Parcelable listState;
+     private GridLayoutManager mGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +41,12 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
         setTitle(R.string.favorites_title);
         //initialization
         mFavoriteMoviesListRecyclerView = (RecyclerView) findViewById(R.id.rv_favorite_movies);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        mFavoriteMoviesListRecyclerView.setLayoutManager(layoutManager);
+        mGridLayoutManager = new GridLayoutManager(this, 3);
+        mFavoriteMoviesListRecyclerView.setLayoutManager(mGridLayoutManager);
         mFavoriteMoviesListRecyclerView.setHasFixedSize(true);
 
         mFavoriteMovieAdapter = new FavoriteMovieAdapter(this);
         ButterKnife.bind(this);
-
 
         //kick off the loader
         getLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this).forceLoad();
@@ -86,13 +89,31 @@ public class FavoriteMoviesActivity extends AppCompatActivity implements LoaderM
         mFavoriteMovieAdapter.swapCursor(null);
     }
 
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus) {
-//            getLoaderManager().restartLoader(FAVORITE_MOVIES_LOADER, null, this);
-//        }
-//    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save list state
+        listState = mGridLayoutManager.onSaveInstanceState();
+        outState.putParcelable(LIST_STATE_KEY, listState);
+    }
+
+
+    @Override
+    protected void onResume() {
+
+        if (listState != null) {
+            mGridLayoutManager.onRestoreInstanceState(listState);
+        }
+        super.onResume();
+    }
+
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        // Retrieve list state and list/item positions
+        if (state != null)
+            listState = state.getParcelable(LIST_STATE_KEY);
+    }
 
 
 
